@@ -2,6 +2,9 @@ const express = require("express");
 const fs = require("fs");
 const app = express();
 
+
+const os = require("os")
+console.log(os.cpus().length)
 // app.use("/", (req, res) => {
 //   res.send("Hello Manrit");
 // });
