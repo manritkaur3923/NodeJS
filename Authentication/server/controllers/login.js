@@ -27,7 +27,7 @@ const Login = async (req, res) => {
       _id: existingUser._id,
       email: existingUser.email,
     };
-    const token = jwt.sign(payload, "manrit", { expiresIn: "1d" });
+    const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "1d" });
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -35,7 +35,7 @@ const Login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: "Lax",
     });
-    
+
     res.status(200).json({
       message: "Login Successful",
       data: {

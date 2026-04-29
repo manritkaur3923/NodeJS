@@ -1,16 +1,18 @@
 const jwt = require("jsonwebtoken");
 
-const authenticateUser = async (req, res, next) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({
-      message: "Token not found",
-    });
-  }
-
+const authenticateUser = (req, res, next) => {
   try {
-    const decoded = jwt.verify(token, "manrit");
-    console.log(decoded);
+    const token = req.cookies?.token;
+    if (!token) {
+      return res.status(401).json({
+        message: "Token not found",
+      });
+    }
+
+    // Verify Token
+    const decoded = jwt.verify(token, process.env.SECRET);
+
+    // Attach the user data to req
     req.user = decoded;
     next();
   } catch (error) {
@@ -20,5 +22,4 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-
-module.exports = authenticateUser
+module.exports = authenticateUser;
